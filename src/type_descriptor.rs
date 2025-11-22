@@ -1,3 +1,16 @@
+pub fn rust_fn_sig_to_jvm(params: &[&str], ret: &str) -> String {
+    let mut desc = String::from("(");
+
+    for p in params {
+        desc.push_str(&rust_type_to_jvm(p));
+    }
+
+    desc.push(')');
+    desc.push_str(&rust_type_to_jvm(ret));
+
+    desc
+}
+
 pub fn rust_type_to_jvm(ty: &str) -> String {
     match ty {
         "i32" => "I".into(),

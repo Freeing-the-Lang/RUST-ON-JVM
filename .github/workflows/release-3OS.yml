@@ -1,7 +1,7 @@
 name: AUTO-RELEASE-3OS
 
 permissions:
-  contents: write     # ★ 태그 푸시 & 릴리즈 생성 필수 권한
+  contents: write
 
 on:
   push:
@@ -37,16 +37,22 @@ jobs:
       - name: Build
         run: cargo build --release --verbose
 
-      - name: Run Compiler
+      - name: Run Compiler (generate Add.class)
         run: cargo run --release
 
-      - name: Upload Artifacts
+      - name: Create JAR package
+        run: |
+          mkdir deploy
+          cp Add.class deploy/
+          cd deploy
+          jar cf rust-on-jvm-${{ matrix.os }}.jar Add.class
+          cd ..
+
+      - name: Upload JAR Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: artifact-${{ matrix.os }}
-          path: |
-            Add.class
-            target/release/**
+          name: rust-on-jvm-${{ matrix.os }}
+          path: deploy/*.jar
 
   release:
     needs: build
@@ -83,6 +89,6 @@ jobs:
           tag_name: ${{ steps.tag.outputs.tag }}
           name: ${{ steps.tag.outputs.tag }}
           generate_release_notes: true
-          files: ./release-assets/**
+          files: ./release-assets/**/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

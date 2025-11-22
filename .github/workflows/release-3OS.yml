@@ -1,5 +1,8 @@
 name: AUTO-RELEASE-3OS
 
+permissions:
+  contents: write     # ★ 태그 푸시 & 릴리즈 생성 필수 권한
+
 on:
   push:
     branches: [ main ]
@@ -29,7 +32,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}
 
       - name: Build
         run: cargo build --release --verbose

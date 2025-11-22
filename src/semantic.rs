@@ -1,14 +1,14 @@
-use crate::parser::AstFunction;
 use crate::ir::IRFunction;
+use crate::parser::AstFunction;
 
-pub fn analyze(ast: AstFunction) -> IRFunction {
+pub fn analyze(ast: &AstFunction) -> IRFunction {
     IRFunction {
-        name: ast.name,
+        name: ast.name.clone(),
         params: ast.params.clone(),
-        ret_type: "i32".into(),
+        ret_type: ast.ret_type.clone(),
         instr: vec![
-            "LOAD a".into(),
-            "LOAD b".into(),
+            "LOAD_0".into(),
+            "LOAD_1".into(),
             "ADD".into(),
             "RETURN".into(),
         ],

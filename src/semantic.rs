@@ -1,5 +1,5 @@
 use crate::parser::AstFunction;
-
+use crate::ir::IRFunction;
 
 pub fn analyze(ast: AstFunction) -> IRFunction {
     IRFunction {

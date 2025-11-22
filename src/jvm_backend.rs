@@ -1,4 +1,12 @@
 use crate::semantic::IRFunction;
+use crate::classfile::ClassFile;
+
+pub fn generate_classfile(ir: IRFunction, path: &str) {
+    let bytecode = generate(ir);
+    let cf = ClassFile::new(bytecode.code);
+    cf.write_to_file(path);
+}
+
 
 #[derive(Debug)]
 pub struct Bytecode {

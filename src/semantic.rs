@@ -1,12 +1,5 @@
 use crate::parser::AstFunction;
 
-#[derive(Debug, Clone)]
-pub struct IRFunction {
-    pub name: String,
-    pub params: Vec<String>,
-    pub ret_type: String,
-    pub instr: Vec<String>,
-}
 
 pub fn analyze(ast: AstFunction) -> IRFunction {
     IRFunction {
